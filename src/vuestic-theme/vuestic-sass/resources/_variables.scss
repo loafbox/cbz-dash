@@ -66,17 +66,19 @@ $theme-colors: (
 $body-bg: $light-gray;
 $top-nav-bg: $cbz-blue;
 $body-color: $vue-darkest-blue !default;
+//$layout-padding: 24px;
 $layout-padding: 24px;
 $layout-padding-right: 44px;
 
-$top-nav-height: 72px;
+//$top-nav-height: 72px;
+$top-nav-height: 0px;
 $nav-padding-left: $layout-padding;
 $nav-padding-right: $layout-padding-right;
 $navbar-brand-container-left: 75px;
 
 $sidebar-bg: $cbz-blue;
 $sidebar-width: 225px;
-$sidebar-top: calc(#{$top-nav-height} + #{$layout-padding});
+$sidebar-top: 0;
 $sidebar-left: $layout-padding;
 
 $content-wrap-ml: calc(#{$sidebar-left} + #{$sidebar-width} + 35px);

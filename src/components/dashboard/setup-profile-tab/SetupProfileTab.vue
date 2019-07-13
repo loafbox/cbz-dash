@@ -5,13 +5,14 @@
       wizard-layout="vertical"
       :wizard-type="wizardType">
       <div slot="page1" class="form-wizard-tab-content">
-        <h4>Type your name</h4>
+        <h2>Congratulations on the Best decision you have ever made!</h2>
         <p>Zebras communicate with facial expressions and sounds. They make loud
           braying or barking sounds and
           soft snorting sounds. The position of their ears, how wide open their
           eyes are, and whether they show
           their teeth all send a signal. For example, ears flat back means
           trouble, or "you better follow orders!"</p>
+        <h4>Type Company Name</h4>
         <div class="form-group with-icon-right"
              :class="{'has-error': errors.has('name'), 'valid': isFormFieldValid('name')}">
           <div class="input-group">

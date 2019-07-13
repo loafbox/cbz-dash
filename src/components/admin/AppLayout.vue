@@ -1,6 +1,6 @@
 <template>
   <vuestic-layout v-layout>
-    <app-navbar :isOpen="opened" @toggle-menu="toggleSidebar"/>
+    <!--<app-navbar :isOpen="opened" @toggle-menu="toggleSidebar"/>-->
     <app-sidebar :isOpen="opened" @toggle-menu="toggleSidebar"/>
     <main
       slot="content"
@@ -8,7 +8,6 @@
       class="content va-layout gutter--lg fluid"
       role="main"
     >
-      <app-breadcrumbs/>
       <vuestic-pre-loader
         v-show="isLoading"
         class="pre-loader"
@@ -16,7 +15,7 @@
       <router-view/>
     </main>
     <span slot="footer">
-      ©2018. Made by&nbsp;<a href="https://epicmax.co" target="_blank"> Epicmax</a>
+      Need Help? Contact Support<a href="#" target="_blank"> 302-223-3322</a>
     </span>
   </vuestic-layout>
 </template>
