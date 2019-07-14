@@ -48,13 +48,21 @@ fieldset {
 .form-group {
   position: relative;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   min-height: $mf-min-height;
   margin-top: ($mf-font-size * 0.2);
   margin-bottom: ($mf-gap * 1.5);
 
   .input-group {
-    align-self: flex-end;
+    align-self: flex-start;
+  }
+
+  .input-group-lg {
+    width: 300px;
+  }
+
+  .input-group-sm {
+    width: 150px;
   }
 
   .input-icon {

@@ -4,14 +4,9 @@
       :steps="steps"
       wizard-layout="vertical"
       :wizard-type="wizardType">
-      <div slot="page1" class="form-wizard-tab-content">
+      <div slot="page2" class="form-wizard-tab-content">
         <h2>Congratulations on the Best decision you have ever made!</h2>
-        <p>Zebras communicate with facial expressions and sounds. They make loud
-          braying or barking sounds and
-          soft snorting sounds. The position of their ears, how wide open their
-          eyes are, and whether they show
-          their teeth all send a signal. For example, ears flat back means
-          trouble, or "you better follow orders!"</p>
+        <p>Welcome to your personal Business Dashboard!  Let's begin by setting up your company profile to help you get setup for success.  </p>
         <h4>Type Company Name</h4>
         <div class="form-group with-icon-right"
              :class="{'has-error': errors.has('name'), 'valid': isFormFieldValid('name')}">
@@ -32,23 +27,9 @@
           </div>
         </div>
       </div>
-      <div slot="page2" class="form-wizard-tab-content">
-        <h4>Select your country</h4>
-        <p>Zebras communicate with facial expressions and sounds. They make loud
-          braying or barking sounds and
-          soft snorting sounds. The position of their ears, how wide open their
-          eyes are, and whether they show
-          their teeth all send a signal. For example, ears flat back means
-          trouble, or "you better follow orders!"</p>
-
-        <vuestic-simple-select
-          label="Select country"
-          v-model="selectedCountry"
-          name="country"
-          :required="true"
-          ref="selectedCountrySelect"
-          :options="countriesList">
-        </vuestic-simple-select>
+      <div slot="page1" class="form-wizard-tab-content">
+        <h4>About {{this.name}}</h4>
+        <address-form/>
       </div>
       <div slot="page3" class="form-wizard-tab-content">
         <h4>Confirm selection</h4>
@@ -79,9 +60,13 @@
 
 <script>
 import CountriesList from 'data/CountriesList'
+import AddressForm from './components/AddressForm'
 
 export default {
   name: 'setup-profile-tab',
+  components: {
+    AddressForm 
+  },
   props: {
     wizardType: {
       default: 'rich',
@@ -101,7 +86,7 @@ export default {
           },
         },
         {
-          label: 'Step 2. Country',
+          label: 'Step 2. About',
           slot: 'page2',
           onNext: () => {
             this.$refs.selectedCountrySelect.validate()
@@ -116,7 +101,7 @@ export default {
         },
       ],
       selectedCountry: '',
-      name: '',
+      name: 'Electric Bike',
       countriesList: CountriesList,
     }
   },

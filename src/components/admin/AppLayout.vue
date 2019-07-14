@@ -1,6 +1,6 @@
 <template>
   <vuestic-layout v-layout>
-    <!--<app-navbar :isOpen="opened" @toggle-menu="toggleSidebar"/>-->
+    <app-navbar :isOpen="opened" @toggle-menu="toggleSidebar"/>
     <app-sidebar :isOpen="opened" @toggle-menu="toggleSidebar"/>
     <main
       slot="content"
