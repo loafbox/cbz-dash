@@ -5,7 +5,7 @@
         <h2>Welcome!</h2>
         <p
           class="form-subtitle"
-        >This is your personal business dashboard. Let's begin by setting up a profile for your business.</p>
+        >Welcome to you personal business dashboard. Let's begin by setting up a profile for your business.</p>
         <div
           :class="{'has-error': errors.has('name'), 'valid': isFormFieldValid('name')}"
           class="md-layout-item md-small-size-100"
@@ -105,27 +105,25 @@
           </md-card>
         </form>
       </div>
+
       <div slot="page3" class="form-wizard-tab-content">
-        <h4>Confirm selection</h4>
-        <p>
-          Zebras communicate with facial expressions and sounds. They make loud
-          braying or barking sounds and
-          soft snorting sounds. The position of their ears, how wide open their
-          eyes are, and whether they show
-          their teeth all send a signal. For example, ears flat back means
-          trouble, or "you better follow orders!"
-        </p>
+        <h4>Custom Keywords</h4>
+        <p>Add keywords to drive traffic to your business. Type or upload your list of keywords below. Keywords are unlimited, add as many as you want!</p>
+        <label for="keywords-help">Use a comma to separate keywords</label>
+        <vue-tags-input
+          :addOnKey="[9, 13, 32, 188]"
+          v-model="tag"
+          :tags="tags"
+          placeholder="Add Keyword"
+          @tags-changed="newTags => tags = newTags"
+        />
       </div>
       <div slot="wizardCompleted" class="form-wizard-tab-content wizard-completed-tab">
-        <h4>Wizard completed!</h4>
-        <p>
-          Zebras communicate with facial expressions and sounds. They make loud
-          braying or barking sounds and
-          soft snorting sounds. The position of their ears, how wide open their
-          eyes are, and whether they show
-          their teeth all send a signal. For example, ears flat back means
-          trouble, or "you better follow orders!"
-        </p>
+        <h4>Profile completed!</h4>
+        <p>{{name}}</p>
+        <p>{{street}}</p>
+        <p>{{city}}, {{state}}</p>
+        <p>{{tags}}</p>
       </div>
     </vuestic-wizard>
   </div>
@@ -134,6 +132,7 @@
 <script>
 import AddressForm from "./components/AddressForm";
 import csc from "country-state-city";
+import VueTagsInput from "@johmun/vue-tags-input";
 
 const CountriesList = csc.getAllCountries();
 const UnitedStates = csc.getCountryById("231");
@@ -142,7 +141,8 @@ const StatesList = csc.getStatesOfCountry("231");
 export default {
   name: "setup-profile-tab",
   components: {
-    AddressForm
+    AddressForm,
+    VueTagsInput
   },
   props: {
     wizardType: {
@@ -185,7 +185,9 @@ export default {
       selectedState: "",
       statesList: StatesList,
       selectedCountry: UnitedStates.name,
-      countriesList: CountriesList
+      countriesList: CountriesList,
+      tag: "",
+      tags: []
     };
   },
   methods: {
@@ -241,5 +243,24 @@ export default {
 
 .has-error label {
   color: red;
+}
+</style>
+
+<style lang="scss">
+/* style the background and the text color of the input ... */
+/* default styles for all the tags */
+.vue-tags-input .ti-input {
+  border-color: $cbz-light-blue;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.vue-tags-input .ti-tag {
+  position: relative;
+  background: $cbz-light-blue;
+  color: $black;
+  border-radius: 3px;
 }
 </style>
