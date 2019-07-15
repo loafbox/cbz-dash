@@ -130,6 +130,10 @@
       "title": "Inputs",
       "upload": "UPLOAD"
     },
+    "profile": {
+      "location": "Location",
+      "locationSubtitle": "Enter your Address so we can get your storefront on the map!"
+    },
     "mediumEditor": {
       "title": "Medium Editor"
     },

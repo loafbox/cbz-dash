@@ -1,35 +1,109 @@
 <template>
   <div class="setup-profile-tab dashboard-tab">
-    <vuestic-wizard
-      :steps="steps"
-      wizard-layout="vertical"
-      :wizard-type="wizardType">
-      <div slot="page2" class="form-wizard-tab-content">
-        <h2>Congratulations on the Best decision you have ever made!</h2>
-        <p>Welcome to your personal Business Dashboard!  Let's begin by setting up your company profile to help you get setup for success.  </p>
-        <h4>Type Company Name</h4>
-        <div class="form-group with-icon-right"
-             :class="{'has-error': errors.has('name'), 'valid': isFormFieldValid('name')}">
-          <div class="input-group">
-            <input
-              type="text"
-              name="name"
-              v-model="name"
+    <vuestic-wizard :steps="steps" wizard-layout="vertical" :wizard-type="wizardType">
+      <div slot="page1" class="form-wizard-tab-content">
+        <h2>Welcome!</h2>
+        <p
+          class="form-subtitle"
+        >This is your personal business dashboard. Let's begin by setting up a profile for your business.</p>
+        <div
+          :class="{'has-error': errors.has('name'), 'valid': isFormFieldValid('name')}"
+          class="md-layout-item md-small-size-100"
+        >
+          <md-field class="md-size-100">
+            <label for="name">Enter Business Name</label>
+            <md-input
               v-validate="'required'"
-              required="required"/>
-            <i
-              class="fa fa-exclamation-triangle error-icon icon-right input-icon"></i>
-            <i class="fa fa-check valid-icon icon-right input-icon"></i>
-            <label class="control-label">Name</label><i class="bar"></i>
-            <small v-show="errors.has('name')" class="help text-danger">{{
-              errors.first('name') }}
-            </small>
-          </div>
+              class="md-input-border"
+              name="name"
+              id="name"
+              v-model="name"
+            />
+          </md-field>
+          <small v-show="errors.has('name')" class="help text-danger">{{ errors.first('name') }}</small>
         </div>
       </div>
-      <div slot="page1" class="form-wizard-tab-content">
-        <h4>About {{this.name}}</h4>
-        <address-form/>
+      <div slot="page2" class="form-wizard-tab-content">
+        <h2>{{'forms.profile.location' | translate}}</h2>
+        <p class="form-subtitle">{{'forms.profile.locationSubtitle' | translate}}</p>
+        <form novalidate class="md-layout">
+          <md-card class="md-layout-item md-size-100 md-small-size-100">
+            <md-card-content>
+              <div class="md-layout md-gutter">
+                <div class="md-layout-item md-small-size-100">
+                  <md-field>
+                    <label for="street">Street Address</label>
+                    <md-input
+                      v-validate="'required'"
+                      class="md-input-border"
+                      name="street"
+                      id="street"
+                      v-model="street"
+                    />
+                  </md-field>
+                  <small
+                    v-show="errors.has('street')"
+                    class="help text-danger"
+                  >{{ errors.first('street') }}</small>
+                </div>
+              </div>
+              <div class="md-layout md-gutter">
+                <div class="md-layout-item md-size-100 md-small-size-100">
+                  <md-field>
+                    <label for="city">City</label>
+                    <md-input
+                      v-validate="'required'"
+                      name="city"
+                      id="city"
+                      class="md-input-border"
+                      v-model="city"
+                    />
+                  </md-field>
+                  <small
+                    v-show="errors.has('city')"
+                    class="help text-danger"
+                  >{{ errors.first('city') }}</small>
+                </div>
+
+                <div class="md-layout-item md-size-40 md-small-size-100">
+                  <md-field>
+                    <label for="state">State</label>
+                    <md-select
+                      v-validate="'required'"
+                      name="state"
+                      id="state"
+                      v-model="selectedState"
+                      md-dense
+                    >
+                      <md-option
+                        v-for="state in statesList"
+                        :value="state.name"
+                        :key="state.id"
+                      >{{state.name}}</md-option>
+                    </md-select>
+                  </md-field>
+                  <small
+                    v-show="errors.has('state')"
+                    class="help text-danger"
+                  >{{ errors.first('state') }}</small>
+                </div>
+
+                <div class="md-layout-item md-size-60 md-small-size-100">
+                  <md-field>
+                    <label for="state">Country</label>
+                    <md-select name="country" id="country" v-model="selectedCountry" md-dense>
+                      <md-option
+                        v-for="country in countriesList"
+                        :value="country.name"
+                        :key="country.id"
+                      >{{country.name}}</md-option>
+                    </md-select>
+                  </md-field>
+                </div>
+              </div>
+            </md-card-content>
+          </md-card>
+        </form>
       </div>
       <div slot="page3" class="form-wizard-tab-content">
         <h4>Confirm selection</h4>
@@ -42,8 +116,7 @@
           trouble, or "you better follow orders!"
         </p>
       </div>
-      <div slot="wizardCompleted"
-           class="form-wizard-tab-content wizard-completed-tab">
+      <div slot="wizardCompleted" class="form-wizard-tab-content wizard-completed-tab">
         <h4>Wizard completed!</h4>
         <p>
           Zebras communicate with facial expressions and sounds. They make loud
@@ -59,65 +132,82 @@
 </template>
 
 <script>
-import CountriesList from 'data/CountriesList'
-import AddressForm from './components/AddressForm'
+import AddressForm from "./components/AddressForm";
+import csc from "country-state-city";
+
+const CountriesList = csc.getAllCountries();
+const UnitedStates = csc.getCountryById("231");
+const StatesList = csc.getStatesOfCountry("231");
 
 export default {
-  name: 'setup-profile-tab',
+  name: "setup-profile-tab",
   components: {
-    AddressForm 
+    AddressForm
   },
   props: {
     wizardType: {
-      default: 'rich',
-    },
+      default: "rich"
+    }
   },
-  data () {
+  data() {
     return {
       steps: [
         {
-          label: 'Step 1. Name',
-          slot: 'page1',
+          label: "Step 1. Welcome",
+          slot: "page1",
           onNext: () => {
-            this.validateFormField('name')
+            this.validateFormField("name");
           },
           isValid: () => {
-            return this.isFormFieldValid('name')
-          },
+            return this.isFormFieldValid("name");
+          }
         },
         {
-          label: 'Step 2. About',
-          slot: 'page2',
+          label: "Step 2. Location",
+          slot: "page2",
           onNext: () => {
-            this.$refs.selectedCountrySelect.validate()
+            this.validateFormField("street");
+            this.validateFormField("city");
+            this.validateFormField("state");
           },
           isValid: () => {
-            return this.$refs.selectedCountrySelect.isValid()
-          },
+            return this.validateAllFields(["street", "city", "state"]);
+          }
         },
         {
-          label: 'Step 3. Confirm',
-          slot: 'page3',
-        },
+          label: "Step 3. Keywords",
+          slot: "page3"
+        }
       ],
-      selectedCountry: '',
-      name: 'Electric Bike',
-      countriesList: CountriesList,
-    }
+      name: "",
+      street: "",
+      city: "",
+      selectedState: "",
+      statesList: StatesList,
+      selectedCountry: UnitedStates.name,
+      countriesList: CountriesList
+    };
   },
   methods: {
-    isFormFieldValid (field) {
-      let isValid = false
+    isFormFieldValid(field) {
+      let isValid = false;
       if (this.formFields[field]) {
-        isValid = this.formFields[field].validated && this.formFields[field].valid
+        isValid =
+          this.formFields[field].validated && this.formFields[field].valid;
       }
-      return isValid
+      return isValid;
     },
-    validateFormField (fieldName) {
-      this.$validator.validate(fieldName, this[fieldName])
+    validateFormField(fieldName) {
+      this.$validator.validate(fieldName, this[fieldName]);
     },
-  },
-}
+    validateAllFields(fields) {
+      return fields.every(field => {
+        console.log(field);
+        return this.formFields[field].validated && this.formFields[field].valid;
+      });
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -127,10 +217,29 @@ export default {
   width: 80%;
 }
 
+.form-subtitle {
+  font-size: 18px;
+  font-weight: 300;
+  text-align: center;
+}
+
 .wizard-completed-tab {
   @include media-breakpoint-up(md) {
     margin-top: -$tab-content-pt;
   }
 }
 
+.md-field .md-input {
+  border-bottom-width: 2px;
+  border-bottom-color: $cbz-light-blue;
+  border-bottom-style: inset;
+}
+
+.md-list-item {
+  background-color: $white;
+}
+
+.has-error label {
+  color: red;
+}
 </style>

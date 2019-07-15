@@ -5,6 +5,7 @@ import 'babel-polyfill'
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
+import VueMaterial from 'vue-material'
 import VeeValidate from 'vee-validate'
 import App from './App'
 import store from './store'
@@ -12,7 +13,9 @@ import router from './router'
 import VuesticPlugin from '@/vuestic-theme/vuestic-plugin'
 import './i18n'
 import YmapPlugin from 'vue-yandex-maps'
+import 'vue-material/dist/vue-material.min.css'
 
+Vue.use(VueMaterial)
 Vue.use(VuesticPlugin)
 Vue.use(YmapPlugin)
 

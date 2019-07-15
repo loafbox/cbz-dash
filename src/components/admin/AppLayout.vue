@@ -14,9 +14,9 @@
       />
       <router-view/>
     </main>
-    <span slot="footer">
+    <!--<span slot="footer">
       Need Help? Contact Support<a href="#" target="_blank"> 302-223-3322</a>
-    </span>
+    </span>-->
   </vuestic-layout>
 </template>
 
